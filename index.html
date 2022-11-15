@@ -34,9 +34,47 @@
             const response = await fetch('./tmr.json');
             const data = await response.json();
 
-            console.log(data.split('\n')[0]);
+            var contadorA = 1;
+            var contadorB = 1;
+            var contadorC = 1;
 
-  
+            // percorre todo o json e separa por sensor
+            for (let i = 0; i < data.length; i++) {
+
+                // preciso ler os 3 valores
+                // separei os sensores pelo \n "Enter"
+                const valores = data.split('\n')[i];
+
+                // separei os 3 sensores pelo ";"
+                const valueA = valores.split(';')[0];
+                const valueB = valores.split(';')[1];
+                const valueC = valores.split(';')[2];
+                console.log(valueA, valueB, valueC);
+
+                // escolher pela maioria ou valor médio ( um dos dois criterios )
+                // verifica qual o sensor mais falhou, percentual de falhas de cada sensor e qual o considerado sem falhas
+                
+                if(valueA == valueB || valueA == valueC ) {
+                    const votadorA = valueA;
+                    console.log("votadorA", votadorA);
+                    contadorA++;
+                } else if ( valueB == valueA || valueB == valueC ) {
+                    const votadorB = valueB;
+                    console.log("votadorB", votadorB);
+                    contadorB++;
+                } else if ( valueC == valueA || valueC == valueB ) {
+                    const votadorC = valueC;
+                    console.log("votadorC", votadorC);
+                    contadorC++;
+                } else {
+                    const votadorMedia = (valueA + valueB + valueC) / 3;
+                    console.log("votador por média", votadorMedia);
+                }
+            }
+
+            console.log("Sensor A", contadorA);
+            console.log("Sensor B", contadorB);
+            console.log("Sensor C", contadorC);
 
             // formatar os dados
             // const htmlList = data.map( ({valor}) => `<li>${valor}</li>`)
