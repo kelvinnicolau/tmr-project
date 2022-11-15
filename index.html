@@ -8,14 +8,24 @@
 
     <script src="index.js"></script>
 
-    <title>TMR</title>
+    <title>PROJECT - TMR </title>
+
+    <style>
+
+        .container {
+            display: flex;
+            gap: .4rem;
+        }
+
+    </style>
+
 </head>
 
 <body>
     <h1>Hellow Ober!</h1>
 
     <div class="container">
-
+        
     </div>
 
     <script>
@@ -24,11 +34,15 @@
             const response = await fetch('./tmr.json');
             const data = await response.json();
 
-            // formatar os dados
+            console.log(data.split('\n')[0]);
 
-            
+  
+
+            // formatar os dados
+            // const htmlList = data.map( ({valor}) => `<li>${valor}</li>`)
 
             // colocar no HTML
+            // document.querySelector(' .container').innerHTML = htmlList;
 
         }) ();
 
