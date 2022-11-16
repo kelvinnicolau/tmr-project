@@ -11,12 +11,18 @@
     <title>PROJECT - TMR </title>
 
     <style>
+        @import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap%22");
+        @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
 
-        .container {
-            display: flex;
-            gap: .4rem;
+        body {
+            font-family: "Rajdhani", sans-serif !important;
+            background-color: #3298dc;
         }
 
+        .container {
+            display: inline;
+            gap: .4rem;
+        }
     </style>
 
 </head>
@@ -25,18 +31,30 @@
     <h1>Hellow Ober!</h1>
 
     <div class="container">
-        
+        <div class="question1">
+            <h2>Qual o sensor que mais falhou?</h2>
+            <p class="response1"></p>
+        </div>
+        <div class="question2">
+            <h2>Qual o percentual de falhas de cada sensor?</h2>
+            <p class="response2"></p>
+        </div>
+        <div class="question3">
+            <h2>Qual o percentual de entradas consideradas sem falhas</h2>
+            <p class="response3"></p>
+        </div>
     </div>
 
     <script>
 
-        (async() => {
+
+        (async () => {
             const response = await fetch('./tmr.json');
             const data = await response.json();
 
-            var contadorA = 1;
-            var contadorB = 1;
-            var contadorC = 1;
+            var contadorA = 0;
+            var contadorB = 0;
+            var contadorC = 0;
 
             // percorre todo o json e separa por sensor
             for (let i = 0; i < data.length; i++) {
@@ -53,16 +71,16 @@
 
                 // escolher pela maioria ou valor médio ( um dos dois criterios )
                 // verifica qual o sensor mais falhou, percentual de falhas de cada sensor e qual o considerado sem falhas
-                
-                if(valueA == valueB || valueA == valueC ) {
+
+                if (valueA == valueB || valueA == valueC) {
                     const votadorA = valueA;
                     console.log("votadorA", votadorA);
                     contadorA++;
-                } else if ( valueB == valueA || valueB == valueC ) {
+                } else if (valueB == valueA || valueB == valueC) {
                     const votadorB = valueB;
                     console.log("votadorB", votadorB);
                     contadorB++;
-                } else if ( valueC == valueA || valueC == valueB ) {
+                } else if (valueC == valueA || valueC == valueB) {
                     const votadorC = valueC;
                     console.log("votadorC", votadorC);
                     contadorC++;
@@ -70,19 +88,29 @@
                     const votadorMedia = (valueA + valueB + valueC) / 3;
                     console.log("votador por média", votadorMedia);
                 }
-            }
 
-            console.log("Sensor A", contadorA);
-            console.log("Sensor B", contadorB);
-            console.log("Sensor C", contadorC);
+
+                console.log("Sensor A", contadorA);
+                console.log("Sensor B", contadorB);
+                console.log("Sensor C", contadorC);
+
+                // colocar no HTML
+                // Resposta 1
+                document.querySelector(' .container .question1 .response1').innerHTML = "Sensor A";
+
+                // Resposta 2 
+                document.querySelector(' .container .question2 .response2').innerHTML = "Sensor A = " + contadorA + "<br>" + "Sensor B = " + contadorB + "<br>" + "Sensor C = " + contadorC;
+
+                // Resposta 3
+                const soma = contadorA + contadorB + contadorC;
+                document.querySelector(' .container .question3 .response3').innerHTML = "Total = " + soma;
+
+            }
 
             // formatar os dados
             // const htmlList = data.map( ({valor}) => `<li>${valor}</li>`)
 
-            // colocar no HTML
-            // document.querySelector(' .container').innerHTML = htmlList;
-
-        }) ();
+        })();
 
     </script>
 
